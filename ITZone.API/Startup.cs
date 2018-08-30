@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using ITZone.API.Data;
+﻿using ITZone.API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,8 +36,6 @@ namespace ITZone.API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
-            services.AddAutoMapper();
-
             services.AddDbContext<Context>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -52,6 +49,10 @@ namespace ITZone.API
                 .Build());
             });
             services.AddMvc();
+
+            //Added By Khattab
+            services.AddSingleton<IConfiguration>(Configuration);
+            //End By Khattab
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

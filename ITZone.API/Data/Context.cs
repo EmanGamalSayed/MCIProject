@@ -20,6 +20,7 @@ namespace ITZone.API.Data
         public DbSet<Assignee> Assignees { get; set; }
         //public DbSet<TaskTable> Task { get; set; }
         public DbSet<TaskModel> GetTask { get; set; }
+        public DbSet<TaskSearch> Search { get; set; }
         public DbSet<TimeLineTask> Tasks { get; set; }
 
         //public DbSet<DetailsTask> Tasks { get; set; }

@@ -55,7 +55,16 @@ namespace ITZone.Entities
         public int flag_id { get; set; }
         public string flag { get; set; }
     }
-
+    [Table("Fn_GetTasksBy")]
+    public class TaskSearch : TaskDB
+    {
+        public string Assignee { get; set; }
+        public string Status { get; set; }
+        public string Priority { get; set; }
+        public string Sector { get; set; }
+        public string Reference { get; set; }
+        public string UrgentSupport { get; set; }
+    }
     public class SectionTask : TaskDB
     {
         public int Status_Id { get; set; }
