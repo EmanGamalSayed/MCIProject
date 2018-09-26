@@ -11,7 +11,7 @@ namespace ITZone.Entities
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Password { get; set; }
+        //public string Password { get; set; }
         public string Email { get; set; }
     }
     public class User : UserTable
@@ -22,6 +22,7 @@ namespace ITZone.Entities
     //[Table("User")]
     public class UserDB : UserTable
     {
+        public string Password { get; set; }
         public byte[] photo { get; set; }
     }
 

@@ -30,66 +30,66 @@ namespace ITZone.API.Controllers
         }
 
         #region Active Directory
-        [HttpGet("ActiveDirectoryUser")]
-        public AD_User ActiveDirectoryUser(string strUserName, string strPassword)
-        {
-            AD_User _ADUser = null;
-          //  using (HostingEnvironment.Impersonate())
-           // {
-                var ADDomainName = _config["ADADomainName"];
-            StreamWriter SW = new StreamWriter("C:\\Logs\\log.txt");
-            SW.WriteLine(ADDomainName.ToString());
-            SW.Close();
-                //string ADDomainName = System.Configuration.ConfigurationManager.AppSettings["ADADomainName"];/*"LDAP://monshaat.gov.sa"*/
-                var ctx = new PrincipalContext(ContextType.Domain, ADDomainName, strUserName, strPassword);
-                string strDistinguishedName = "";
-                bool bValid = ctx.ValidateCredentials(strUserName, strPassword);
-                if (bValid)
-                {
-                    UserPrincipal prUsr = new UserPrincipal(ctx);
+        //[HttpGet("ActiveDirectoryUser")]
+        //public AD_User ActiveDirectoryUser(string strUserName, string strPassword)
+        //{
+        //    AD_User _ADUser = null;
+        //  //  using (HostingEnvironment.Impersonate())
+        //   // {
+        //        var ADDomainName = _config["ADADomainName"];
+        //    StreamWriter SW = new StreamWriter("C:\\Logs\\log.txt");
+        //    SW.WriteLine(ADDomainName.ToString());
+        //    SW.Close();
+        //        //string ADDomainName = System.Configuration.ConfigurationManager.AppSettings["ADADomainName"];/*"LDAP://monshaat.gov.sa"*/
+        //        var ctx = new PrincipalContext(ContextType.Domain, ADDomainName, strUserName, strPassword);
+        //        string strDistinguishedName = "";
+        //        bool bValid = ctx.ValidateCredentials(strUserName, strPassword);
+        //        if (bValid)
+        //        {
+        //            UserPrincipal prUsr = new UserPrincipal(ctx);
 
-                    if (IsValidEmail(strUserName))
-                        prUsr.EmailAddress = strUserName;
-                    else
-                        prUsr.SamAccountName = strUserName;
+        //            if (IsValidEmail(strUserName))
+        //                prUsr.EmailAddress = strUserName;
+        //            else
+        //                prUsr.SamAccountName = strUserName;
 
-                    PrincipalSearcher srchUser = new PrincipalSearcher(prUsr);
-                    UserPrincipal foundUsr = srchUser.FindOne() as UserPrincipal;
-                    if (foundUsr != null)
-                    {
-                        _ADUser = new AD_User();
-                        strDistinguishedName = foundUsr.DistinguishedName;
+        //            PrincipalSearcher srchUser = new PrincipalSearcher(prUsr);
+        //            UserPrincipal foundUsr = srchUser.FindOne() as UserPrincipal;
+        //            if (foundUsr != null)
+        //            {
+        //                _ADUser = new AD_User();
+        //                strDistinguishedName = foundUsr.DistinguishedName;
 
-                        _ADUser.DisplayName = foundUsr.DisplayName;
-                        _ADUser.EmailAddress = foundUsr.EmailAddress;
-                        //_ADUser.ID = foundUsr.EmployeeId;
-                        _ADUser.SamAccountName = foundUsr.SamAccountName;
-                        _ADUser.Name = foundUsr.Name;
-                    }
-                    //else
-                    //    throw new AuthenticationException
-                    //    ("Please enter valid UserName/Password.");
-                }
-                //else
-                //    throw new AuthenticationException
-                //    ("Please enter valid UserName/Password.");
+        //                _ADUser.DisplayName = foundUsr.DisplayName;
+        //                _ADUser.EmailAddress = foundUsr.EmailAddress;
+        //                //_ADUser.ID = foundUsr.EmployeeId;
+        //                _ADUser.SamAccountName = foundUsr.SamAccountName;
+        //                _ADUser.Name = foundUsr.Name;
+        //            }
+        //            //else
+        //            //    throw new AuthenticationException
+        //            //    ("Please enter valid UserName/Password.");
+        //        }
+        //        //else
+        //        //    throw new AuthenticationException
+        //        //    ("Please enter valid UserName/Password.");
 
-                return _ADUser;
-           // }
-        }
+        //        return _ADUser;
+        //   // }
+        //}
 
-        bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //bool IsValidEmail(string email)
+        //{
+        //    try
+        //    {
+        //        var addr = new System.Net.Mail.MailAddress(email);
+        //        return addr.Address == email;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
         #endregion
 
         #region Authentication / Token

@@ -231,8 +231,8 @@ namespace ITZone.API.Controllers
         [HttpGet("GetUserTasks"), Authorize]
         public ActionResult GetUserTasks(int userId,bool isUrgent)
         {
-            //try
-            //{
+            try
+            {
                 List<TimeLineTasks> tasksList = new List<TimeLineTasks>();
                 var tasks = db.Tasks.FromSql($"select* from [Fn_GetTimeLineWithUrgent] ({userId},{isUrgent})").ToList();
                 var urgentTask = tasks.Where(t => t.flag_id == (int)SectionIDs.Urgent).ToList();
@@ -247,11 +247,11 @@ namespace ITZone.API.Controllers
                 var remainingTask = tasks.Where(t => t.flag_id == (int)SectionIDs.Remaining).ToList();
                 tasksList.Add(new TimeLineTasks { sectionName = "remaining", tasks = remainingTask });
                 return Ok(tasksList);
-            //}
-            //catch
-            //{
-            //    return BadRequest();
-            //}
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("Get_SectorsView"), Authorize]
